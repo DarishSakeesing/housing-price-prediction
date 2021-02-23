@@ -1,7 +1,7 @@
-#Introduction
+# Introduction
 This repo contains the code that for business insights and price prediction
 
-#Team:
+# Team:
 Chitra Sharathchandra
 Darish Sakeesing
 Douglas Pizac

@@ -1,5 +1,5 @@
 # Introduction
-This repo contains the code that for business insights and price prediction
+This repo contains the code for business insights and price prediction
 
 # Team:
 - Chitra Sharathchandra

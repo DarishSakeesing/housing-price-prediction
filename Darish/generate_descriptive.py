@@ -1,7 +1,13 @@
 import pandas as pd
+
+
+
 import numpy as np
 
+
+
 raw_data = pd.read_csv('data/Ames_Housing_Price_Data.csv', index_col=0)
+
 
 def print_missing_stats(s):
     print('Missing Value:')

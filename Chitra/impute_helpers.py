@@ -25,3 +25,15 @@ def impute_with_closest_year(df,missingcol):
         neighbor=find_neighbours(price,df,'YearBuilt')
         df.loc[idx,missingcol]=df.loc[neighbor[0],missingcol]
     return df
+
+def impute_with_mode(df,missingcol,groupingcol):
+      for idx in df[pd.isnull(df[missingcol])].index:
+            modevalue=df.groupby(groupingcol)[missingcol].agg(pd.Series.mode)
+            df.loc[idx,missingcol]=modevalue[df.loc[idx,groupingcol]]
+
+def impute_subset_neighbor_with_closest_price(df,subset,missingcol):
+    for idx in subset.index:
+        price=df.loc[idx,'SalePrice']
+        neighbor=find_neighbours(price,df[df['Neighborhood']==df.loc[idx,'Neighborhood']],'SalePrice')
+        df.loc[idx,missingcol]=df.loc[neighbor[0],missingcol]
+    return df

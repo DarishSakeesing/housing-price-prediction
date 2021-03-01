@@ -13,9 +13,11 @@ mice::md.pattern(data)
 
 colnames(data)[colSums(is.na.data.frame(data)) > 0] #Which columns have Na
 
+
 sum(!complete.cases(data))
 
-
+MSNVnrArea = data[is.na(data$MasVnrArea),]
+MSNVnrType = data[is.na(data$MasVnrType ),]
 
 GarageVars = data[,grepl("Garage", colnames(data))] #extract Garage variables
 

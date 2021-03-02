@@ -37,3 +37,16 @@ def impute_subset_neighbor_with_closest_price(df,subset,missingcol):
         neighbor=find_neighbours(price,df[df['Neighborhood']==df.loc[idx,'Neighborhood']],'SalePrice')
         df.loc[idx,missingcol]=df.loc[neighbor[0],missingcol]
     return df
+
+def impute_subset_with_mode(df,subset,missingcol,groupingcol):
+    neighborMode=df.groupby(groupingcol)[missingcol].agg(pd.Series.mode)
+    for idx in subset.index:
+        modevalue=neighborMode[df.loc[idx,groupingcol]]
+        df.loc[idx,missingcol]=modevalue
+
+def impute_with_neighbor_mean(df,missingcol):
+    neighborMeans=df.groupby("Neighborhood")[missingcol].agg('mean')
+    missingcolIndex=df[pd.isnull(df[missingcol])].index
+    for idx in missingcolIndex:
+        value=neighborMeans[df.loc[idx,'Neighborhood']]
+        df.loc[idx,missingcol]=value

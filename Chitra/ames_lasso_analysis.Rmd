@@ -1,0 +1,43 @@
+---
+title: "Ames_lasso_analysis"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Lasso model analysis
+
+Purpose of this file is to bring the imputed file from python and use the variables flushed out
+by lasso to do analysis on the data 
+
+```{r}
+library(VIM)
+library(dplyr)
+library(mice)
+library(caret)
+library(ggplot2)
+library(Hmisc)
+library(car)
+ames_house_price=read.csv("./imputeImpl2a_cat_housingData.csv",na.strings=c("DNE"),check.names = FALSE)
+summary(ames_house_price)
+cols_na=colSums(is.na(ames_house_price))
+cols_na
+```
+
+## Lasso variables
+
+
+```{r}
+x_lasso_variables = ames_house_price %>%  select('GreatLocation2', 'OverallQual', 'GoodExteriorQual', 'AirConditioning','KitchenAbvGr', 'PubUtilities', 'HeatingQuality', 'OverallCond','LandContourHLS', 'FunctionDeduction', 'Fireplaces', 'GarageCars','BsmtFullBath', 'BasementQuality', 'FireplaceQuality', 'BuiltInGarage','LivableBasement1', 'TotRmsAbvGrd', 'GarageFinished', 'YearBuilt','YrSold', 'YearRemodAdd', 'LotFrontage', 'MSSubClass', 'GrLivArea','ScreenPorch', 'GarageArea', 'TotalBsmtSF', 'BsmtFinSF1','EnclosedPorch', 'BsmtFinSF2', 'OpenPorchSF', 'WoodDeckSF','GarageYrBlt', 'LotArea', "1stFlrSF")
+```
+
+## Lasso variables
+
+```{r}
+model = lm(log(ames_house_price$SalePrice) ~ ., data=x_lasso_variables)
+summary(model)
+plot(model)
+vif(model)
+```
